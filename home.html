@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="formulario-container">
+        <form class="formulario" method="post" action="#">
+            <label for="nome">Nome </label>
+            <input type="text" id="nome" name="nome">
+
+            <label for="email">E-mail </label>
+            <input type="text" id="email" name="email">
+
+            <label>Presença confirmada</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="presenca" value="sim"> Sim 
+                </label>
+                <label>
+                    <input type="checkbox" name="presenca" value="nao"> Não 
+                </label>
+            </div>
+
+            <label for="ingresso">Tipo de ingresso</label>
+            <select name="ingresso" id="ingresso">
+                <option> Padrão </option>
+                <option> VIP </option>
+                <option> Convidado </option>
+            </select>
+
+            <label>Deseja receber novidades do evento?</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="novidades" value="sim"> Sim 
+                </label>
+                <label>
+                    <input type="checkbox" name="novidades" value="nao"> Não 
+                </label>
+            </div>
+
+            <!-- Aparecer com JS -->
+            <div class="novidades" id="novidades">
+                <p>Quais assuntos te interessam?</p>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="interesses" value="promocoes"> Receber emails de promoções
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesses" value="avisos"> Receber avisos
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesses" value="noticias"> Receber notícias
+                    </label>
+                </div>
+            </div>
+
+            <button type="button" class="botao cadastrar" onclick="cadastrar()"> Cadastrar Participante </button>
+            <button type="button" class="botao limpar" onclick="limparDados()"> Limpar Campos </button>
+        </form>
+    </div>
+
+    <!-- Aparece com JS -->
+    <div id="lista-participantes"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
