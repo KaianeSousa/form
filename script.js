@@ -5,114 +5,36 @@ function exibirDataHora() {
     document.getElementById('data-hora').textContent = dataHora.toLocaleString();
 }
 
-function criarFormulario() {
-    const container = document.querySelector('.formulario-container');
-    const form = document.createElement('form');
-    form.className = 'formulario';
-    form.setAttribute('id', 'formulario');
-
-    const campos = [
-        { label: 'Nome', type: 'text', id: 'nome' },
-        { label: 'E-mail', type: 'text', id: 'email' },
-    ];
-
-    campos.forEach(campo => {
-        const label = document.createElement('label');
-        label.setAttribute('for', campo.id);
-        label.textContent = campo.label;
-        const input = document.createElement('input');
-        input.type = campo.type;
-        input.id = campo.id;
-        input.name = campo.id;
-        form.appendChild(label);
-        form.appendChild(input);
-    });
-
-    const presencaLabel = document.createElement('label');
-    presencaLabel.textContent = 'Presença confirmada';
-    form.appendChild(presencaLabel);
-
-    const presencaDiv = document.createElement('div');
-    presencaDiv.className = 'checkbox';
-    presencaDiv.innerHTML = `
-        <label><input type="checkbox" name="presenca" value="sim"> Sim</label>
-        <label><input type="checkbox" name="presenca" value="nao"> Não</label>
-    `;
-    form.appendChild(presencaDiv);
-
-    const ingressoLabel = document.createElement('label');
-    ingressoLabel.setAttribute('for', 'ingresso');
-    ingressoLabel.textContent = 'Tipo de ingresso';
-    const select = document.createElement('select');
-    select.name = 'ingresso';
-    select.id = 'ingresso';
-    ['Padrão', 'VIP', 'Convidado'].forEach(op => {
-        const option = document.createElement('option');
-        option.value = op;
-        option.textContent = op;
-        select.appendChild(option);
-    });
-    form.appendChild(ingressoLabel);
-    form.appendChild(select);
-
-    const novidadesLabel = document.createElement('label');
-    novidadesLabel.textContent = 'Deseja receber novidades do evento?';
-    form.appendChild(novidadesLabel);
-
-    const novidadesDiv = document.createElement('div');
-    novidadesDiv.className = 'checkbox';
-    novidadesDiv.innerHTML = `
-        <label><input type="checkbox" name="novidades" value="sim"> Sim</label>
-        <label><input type="checkbox" name="novidades" value="nao"> Não</label>
-    `;
-    form.appendChild(novidadesDiv);
-
-    const novidadesExtra = document.createElement('div');
-    novidadesExtra.className = 'novidades';
-    novidadesExtra.id = 'novidades';
-    novidadesExtra.innerHTML = `
-        <p>Qual assunto te interessa?</p>
-        <div class="checkbox">
-            <label><input type="checkbox" name="interesses" value="promocoes"> Promoções</label>
-            <label><input type="checkbox" name="interesses" value="avisos"> Avisos</label>
-            <label><input type="checkbox" name="interesses" value="noticias"> Notícias</label>
-        </div>
-    `;
-    form.appendChild(novidadesExtra);
-
-    const botaoCadastrar = document.createElement('button');
-    botaoCadastrar.type = 'button';
-    botaoCadastrar.className = 'botao cadastrar';
-    botaoCadastrar.textContent = 'Cadastrar Participante';
-    botaoCadastrar.onclick = cadastrar;
-
-    const botaoLimpar = document.createElement('button');
-    botaoLimpar.type = 'button';
-    botaoLimpar.className = 'botao limpar';
-    botaoLimpar.textContent = 'Limpar Campos';
-    botaoLimpar.onclick = limparDados;
-
-    form.appendChild(botaoCadastrar);
-    form.appendChild(botaoLimpar);
-
-    container.appendChild(form);
-}
-
 function cadastrar() {
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
-    const presenca = document.querySelector('input[name="presenca"]:checked');
+    const presencaSim = document.querySelector('input[name="presenca"][value="sim"]');
+    const presencaNao = document.querySelector('input[name="presenca"][value="nao"]');
     const ingresso = document.getElementById('ingresso').value;
 
-    if (!nome || !email || !presenca) {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+    // Expressão regular para validação de e-mail simples
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validação de campos obrigatórios e presença (apenas um deve ser selecionado)
+    if (!nome || !email || (!presencaSim.checked && !presencaNao.checked)) {
+        alert('Por favor, preencha todos os campos obrigatórios e selecione uma opção de presença.');
+        return;
+    }
+
+    if (presencaSim.checked && presencaNao.checked) {
+        alert('Por favor, selecione apenas uma opção para Presença Confirmada.');
+        return;
+    }
+
+    if (!emailRegex.test(email)) {
+        alert('Por favor, insira um endereço de e-mail válido.');
         return;
     }
 
     const participante = {
         nome,
         email,
-        presenca: presenca.value,
+        presenca: presencaSim.checked ? presencaSim.value : presencaNao.value,
         ingresso
     };
 
@@ -121,6 +43,9 @@ function cadastrar() {
     adicionarParticipanteNaTela(participante);
     document.getElementById('formulario').reset();
     document.getElementById('novidades').style.display = 'none';
+    // Após resetar o formulário, certifique-se de que nenhum checkbox de presença esteja marcado
+    if (presencaSim) presencaSim.checked = false;
+    if (presencaNao) presencaNao.checked = false;
 }
 
 function adicionarParticipanteNaTela(participante) {
@@ -157,6 +82,21 @@ function configurarNovidades() {
         if (e.target.name === 'novidades') {
             const mostrar = e.target.value === 'sim' && e.target.checked;
             document.getElementById('novidades').style.display = mostrar ? 'block' : 'none';
+
+            // Desmarcar o outro checkbox de novidades para simular radio
+            if (e.target.value === 'sim' && e.target.checked) {
+                document.querySelector('input[name="novidades"][value="nao"]').checked = false;
+            } else if (e.target.value === 'nao' && e.target.checked) {
+                document.querySelector('input[name="novidades"][value="sim"]').checked = false;
+                document.getElementById('novidades').style.display = 'none'; // Esconder se 'Não' for marcado
+            }
+        } else if (e.target.name === 'presenca') {
+            // Desmarcar o outro checkbox de presença para simular radio
+            if (e.target.value === 'sim' && e.target.checked) {
+                document.querySelector('input[name="presenca"][value="nao"]').checked = false;
+            } else if (e.target.value === 'nao' && e.target.checked) {
+                document.querySelector('input[name="presenca"][value="sim"]').checked = false;
+            }
         }
     });
 }
@@ -185,4 +125,15 @@ window.onload = () => {
     alert('Seja bem-vindo ao nosso sistema!');
     exibirDataHora();
     configurarNovidades();
+
+    // Adicionar event listeners para os botões
+    const botaoCadastrar = document.querySelector('.botao.cadastrar');
+    if (botaoCadastrar) {
+        botaoCadastrar.addEventListener('click', cadastrar);
+    }
+
+    const botaoLimpar = document.querySelector('.botao.limpar');
+    if (botaoLimpar) {
+        botaoLimpar.addEventListener('click', limparDados);
+    }
 };

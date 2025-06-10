@@ -7,62 +7,66 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Inscrição do Evento</h1>
+    <p class="subtitle">Cadastre-se e garanta sua presença</p>
     <div id="data-hora" class="data-hora"></div>
-    <div class="formulario-container">
-        <form class="formulario" method="post" action="#">
-            <label for="nome">Nome </label>
-            <input type="text" id="nome" name="nome">
+    <main>
+        <div class="formulario-container">
+            <form class="formulario" id="formulario" method="post" action="/submit_form">
+                <label for="nome">Nome </label>
+                <input type="text" id="nome" name="nome" required>
 
-            <label for="email">E-mail </label>
-            <input type="text" id="email" name="email">
+                <label for="email">E-mail </label>
+                <input type="text" id="email" name="email" required>
 
-            <label>Presença confirmada</label>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="presenca" value="sim"> Sim 
-                </label>
-                <label>
-                    <input type="checkbox" name="presenca" value="nao"> Não 
-                </label>
-            </div>
-
-            <label for="ingresso">Tipo de ingresso</label>
-            <select name="ingresso" id="ingresso">
-                <option> Padrão </option>
-                <option> VIP </option>
-                <option> Convidado </option>
-            </select>
-
-            <label>Deseja receber novidades do evento?</label>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="novidades" value="sim"> Sim 
-                </label>
-                <label>
-                    <input type="checkbox" name="novidades" value="nao"> Não 
-                </label>
-            </div>
-
-            <!-- Aparecer com JS -->
-            <div class="novidades" id="novidades">
-                <p>Quais assuntos te interessam?</p>
+                <label>Presença confirmada</label>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="interesses" value="promocoes"> Receber emails de promoções
+                        <input type="radio" name="presenca" value="sim" required> Sim, estarei presente
                     </label>
                     <label>
-                        <input type="checkbox" name="interesses" value="avisos"> Receber avisos
-                    </label>
-                    <label>
-                        <input type="checkbox" name="interesses" value="noticias"> Receber notícias
+                        <input type="radio" name="presenca" value="nao"> Não poderei comparecer
                     </label>
                 </div>
-            </div>
 
-            <button type="button" class="botao cadastrar" onclick="cadastrar()"> Cadastrar Participante </button>
-            <button type="button" class="botao limpar" onclick="limparDados()"> Limpar Campos </button>
-        </form>
-    </div>
+                <label for="ingresso">Tipo de ingresso</label>
+                <select name="ingresso" id="ingresso">
+                    <option> Padrão </option>
+                    <option> VIP </option>
+                    <option> Convidado </option>
+                </select>
+
+                <label>Deseja receber novidades do evento?</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="novidades" value="sim"> Sim, quero receber
+                    </label>
+                    <label>
+                        <input type="checkbox" name="novidades" value="nao"> Não, obrigado
+                    </label>
+                </div>
+
+                <!-- Aparecer com JS -->
+                <div class="novidades" id="novidades">
+                    <p>Quais assuntos te interessam?</p>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="interesses" value="promocoes"> Receber emails de promoções
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interesses" value="avisos"> Receber avisos
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interesses" value="noticias"> Receber notícias
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="botao cadastrar"> Cadastrar Participante </button>
+                <button type="button" class="botao limpar"> Limpar Campos </button>
+            </form>
+        </div>
+    </main>
 
     <!-- Aparece com JS -->
     <div id="lista-participantes"></div>

@@ -1,3 +1,14 @@
+/* Reset básico e variáveis */
+:root {
+    --primary-blue: #2196f3; /* Um azul vibrante */
+    --light-blue: #e3f2fd; /* Azul muito claro para elementos de destaque */
+    --text-dark: #333;
+    --text-light: #fff;
+    --background-gray: #f4f7f6;
+    --border-light: #ddd;
+    --shadow-soft: 0 2px 5px rgba(0,0,0,0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,123 +20,324 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: #f8f8f8;
+    justify-content: center; /* Centraliza verticalmente o conteúdo */
+    font-family: 'Roboto', sans-serif; /* Uma fonte limpa como Roboto */
+    background-color: var(--primary-blue); /* Fundo azul principal */
+    color: var(--text-dark);
     padding: 20px;
-    gap: 20px;
+    gap: 25px; /* Espaçamento entre blocos */
 }
 
+/* Títulos */
+h1 {
+    color: var(--text-light); /* Título branco */
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+p.subtitle { /* Para o texto "Cadastre-se e garanta sua presença" */
+    color: rgba(255, 255, 255, 0.8); /* Texto subtítulo mais suave */
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilo da data e hora */
 #data-hora {
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: normal; /* Sem negrito extra */
+    margin-bottom: 0;
+    color: var(--text-dark); /* Cor de texto padrão */
 }
 
 .data-hora {
     text-align: center;
-    padding: 10px;
-    background-color: #f0f0f0;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 20px;
+    padding: 8px 20px; /* Padding para formato de pílula */
+    background-color: var(--light-blue); /* Fundo azul claro */
+    border-radius: 25px; /* Bordas bem arredondadas para pílula */
+    box-shadow: var(--shadow-soft);
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--primary-blue); /* Cor do texto dentro da pílula */
+    margin-bottom: 25px;
 }
 
+/* Contêiner do formulário */
 .formulario-container {
     width: 100%;
-    max-width: 400px;
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Largura ajustada */
+    background-color: var(--text-light); /* Fundo branco */
+    padding: 30px;
+    border-radius: 15px; /* Bordas mais arredondadas */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais destacada */
 }
 
 .formulario {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px; /* Espaçamento entre campos */
+}
+
+label {
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 4px; /* Pequena margem abaixo da label */
+    display: block;
 }
 
 input[type="text"],
 select {
-    padding: 8px;
+    padding: 12px;
     font-size: 16px;
     width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid var(--border-light); /* Borda sutil */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--primary-blue); /* Borda azul ao focar */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2); /* Sombra suave de foco */
 }
 
 .checkbox {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    flex-direction: column; /* Organiza verticalmente */
+    gap: 8px; /* Espaçamento entre as opções */
+    margin-top: 5px;
+}
+
+.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre o input e o texto */
+    font-weight: normal; /* Labels normais */
+    cursor: pointer;
+    color: var(--text-dark);
+    margin-bottom: 0; /* Remove margem extra */
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    /* Remover estilos padrão para personalização */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 20px; /* Tamanho maior para visibilidade */
+    height: 20px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px; /* Bordas mais arredondadas */
+    cursor: pointer;
+    position: relative; /* Para posicionar o checkmark/x */
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+    background-color: var(--text-light);
+}
+
+input[type="radio"] {
+    border-radius: 50%; /* Mantém o radio button redondo */
+}
+
+/* Estilo para checkbox/radio marcado */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: var(--primary-blue); /* Fundo azul quando marcado */
+    border-color: var(--primary-blue);
+}
+
+/* Checkmark para checkbox 'Sim' */
+input[type="checkbox"][value="sim"]:checked::before {
+    content: '\2713'; /* Unicode para checkmark */
+    color: var(--text-light);
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* X para checkbox 'Não' */
+input[type="checkbox"][value="nao"]:checked::before {
+    content: '\2715'; /* Unicode para X */
+    color: var(--text-light);
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Remove o checkmark padrão do radio */
+input[type="radio"]:checked::before {
+    content: ''; /* Remove o checkmark padrão */
+}
+
+/* Remove o círculo interno do radio */
+input[type="radio"]:checked::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-light);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .botao {
-    font-size: 16px;
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid;
+    padding: 12px 20px;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 15px; /* Espaço acima dos botões */
 }
 
 .cadastrar {
-    background-color: rgb(101, 243, 195);
-    border-color: rgb(89, 197, 230);
+    background-color: #4CAF50; /* Verde mais padrão */
 }
 
 .cadastrar:hover {
-    background-color: rgb(95, 216, 176);
-    border-color: rgb(66, 170, 202);
+    background-color: #45a049;
+    transform: translateY(-1px);
 }
 
 .limpar {
-    background-color: rgb(230, 123, 252);
-    border-color: rgb(246, 70, 237);
+    background-color: #f44336; /* Vermelho para limpar */
 }
 
 .limpar:hover {
-    background-color: rgb(225, 98, 250);
-    border-color: rgb(250, 42, 240);
+    background-color: #d32f2f;
+    transform: translateY(-1px);
 }
 
 .novidades {
     display: none;
-    padding: 5px;
+    padding: 15px;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background-color: var(--background-gray);
+    margin-top: 15px;
 }
 
 .novidades p {
     margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--text-dark);
 }
 
 .novidades .checkbox {
     flex-direction: column;
     gap: 8px;
+    align-items: flex-start;
+}
+
+#lista-participantes {
+    margin-top: 30px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    width: 100%;
+    max-width: 800px; /* Alinha com o formulário se estivesse em uma linha */
 }
 
 .participante {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fff;
+    background-color: var(--text-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
+    transition: transform 0.2s ease;
+}
+
+.participante:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.participante p {
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.participante p strong {
+    color: #000;
 }
 
 .vip {
-    border: 2px solid gold;
-    background-color: #fffbea;
+    border: 2px solid #FFD700; /* Dourado para VIP */
+    background-color: #FFFDE7;
 }
 
 .convidado {
-    border: 2px dashed blue;
-    background-color: #eef6ff;
+    border: 2px solid #00BFFF; /* Azul claro para Convidado */
+    background-color: #E0F7FA;
 }
 
 .remover {
-    background-color: crimson;
+    background-color: #D32F2F; /* Vermelho mais forte */
     color: white;
-    margin-top: 10px;
+    margin-top: 15px;
     border: none;
-    padding: 5px;
+    padding: 8px 15px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.remover:hover {
+    background-color: #B71C1C;
+    transform: translateY(-1px);
+}
+
+/* Media Queries para Responsividade */
+@media screen and (min-width: 768px) {
+    .formulario-container {
+        padding: 40px;
+    }
+
+    .formulario {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .formulario label,
+    .formulario input[type="text"],
+    .formulario select,
+    .formulario .checkbox,
+    .formulario .novidades,
+    .formulario .botao {
+        width: 48%; /* Duas colunas em telas maiores */
+    }
+    
+    .formulario .checkbox,
+    .formulario .novidades,
+    .formulario .botao {
+        width: 100%; /* Ocupa a largura total para esses elementos */
+    }
+
+    .participante {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas para tablets */
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .formulario-container {
+        max-width: 700px;
+        padding: 50px;
+    }
+
+    .participante {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas para desktops */
+    }
 }
