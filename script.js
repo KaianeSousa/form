@@ -161,9 +161,28 @@ function configurarNovidades() {
     });
 }
 
+// Função para atualizar a data e hora
+function atualizarDataHora() {
+    const elemento = document.getElementById('data-hora');
+    const agora = new Date();
+    const opcoes = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+    elemento.textContent = agora.toLocaleDateString('pt-BR', opcoes);
+}
+
+setInterval(atualizarDataHora, 1000);
+
+atualizarDataHora();
+
 window.onload = () => {
     alert('Seja bem-vindo ao nosso sistema!');
     exibirDataHora();
-    criarFormulario();
     configurarNovidades();
 };
