@@ -46,7 +46,7 @@ p.subtitle {
 
 #data-hora {
     font-weight: normal;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     color: var(--text-dark);
 }
 
