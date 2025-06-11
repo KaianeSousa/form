@@ -122,7 +122,26 @@ setInterval(atualizarDataHora, 1000);
 atualizarDataHora();
 
 window.onload = () => {
-    alert('Seja bem-vindo ao nosso sistema!');
+    const mensagemBoasVindas = document.getElementById('mensagem-boas-vindas');
+    const botaoFechar = mensagemBoasVindas.querySelector('.botao-fechar');
+    
+    mensagemBoasVindas.classList.add('visivel');
+
+    // Função para fechar a mensagem
+    const fecharMensagem = () => {
+        mensagemBoasVindas.classList.remove('visivel');
+    };
+
+    // Adicionar evento de clique ao botão
+    botaoFechar.addEventListener('click', fecharMensagem);
+
+    // Remover a mensagem após 5 segundos se o usuário não fechar
+    setTimeout(() => {
+        if (mensagemBoasVindas.classList.contains('visivel')) {
+            fecharMensagem();
+        }
+    }, 5000);
+
     exibirDataHora();
     configurarNovidades();
 

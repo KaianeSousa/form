@@ -341,3 +341,65 @@ input[type="radio"]:checked::after {
         grid-template-columns: repeat(3, 1fr); /* 3 colunas para desktops */
     }
 }
+
+.mensagem-boas-vindas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.mensagem-boas-vindas.visivel {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mensagem-conteudo {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.mensagem-boas-vindas.visivel .mensagem-conteudo {
+    transform: translateY(0);
+}
+
+.mensagem-conteudo h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.mensagem-conteudo p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.botao-fechar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.botao-fechar:hover {
+    background-color: #45a049;
+}
