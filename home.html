@@ -7,13 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="mensagem-boas-vindas" class="mensagem-boas-vindas">
-        <div class="mensagem-conteudo">
-            <h2>Bem-vindo!</h2>
-            <p>Seja bem-vindo ao nosso sistema de inscrição.</p>
-            <button class="botao-fechar">OK</button>
-        </div>
-    </div>
     <h1>Inscrição do Evento</h1>
     <p class="subtitle">Cadastre-se e garanta sua presença</p>
     <div id="data-hora" class="data-hora"></div>
@@ -29,10 +22,10 @@
                 <label>Presença confirmada</label>
                 <div class="checkbox">
                     <label>
-                        <input type="radio" name="presenca" value="sim" required> Sim, estarei presente
+                        <input type="checkbox" name="presenca" value="sim" required> Sim, estarei presente
                     </label>
                     <label>
-                        <input type="radio" name="presenca" value="nao"> Não poderei comparecer
+                        <input type="checkbox" name="presenca" value="nao"> Não poderei comparecer
                     </label>
                 </div>
 
@@ -58,13 +51,13 @@
                     <p>Quais assuntos te interessam?</p>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="interesses" value="promocoes"> Receber emails de promoções
+                            <input type="checkbox" name="interesses" value="interesse"> Receber emails de promoções
                         </label>
                         <label>
-                            <input type="checkbox" name="interesses" value="avisos"> Receber avisos
+                            <input type="checkbox" name="interesses" value="interesse"> Receber avisos
                         </label>
                         <label>
-                            <input type="checkbox" name="interesses" value="noticias"> Receber notícias
+                            <input type="checkbox" name="interesses" value="interesse"> Receber notícias
                         </label>
                     </div>
                 </div>
