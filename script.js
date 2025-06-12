@@ -12,17 +12,10 @@ function cadastrar() {
     const presencaNao = document.querySelector('input[name="presenca"][value="nao"]');
     const ingresso = document.getElementById('ingresso').value;
 
-    // Expressão regular para validação de e-mail simples
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validação de campos obrigatórios e presença (apenas um deve ser selecionado)
     if (!nome || !email || (!presencaSim.checked && !presencaNao.checked)) {
         alert('Por favor, preencha todos os campos obrigatórios e selecione uma opção de presença.');
-        return;
-    }
-
-    if (presencaSim.checked && presencaNao.checked) {
-        alert('Por favor, selecione apenas uma opção para Presença Confirmada.');
         return;
     }
 
@@ -43,9 +36,6 @@ function cadastrar() {
     adicionarParticipanteNaTela(participante);
     document.getElementById('formulario').reset();
     document.getElementById('novidades').style.display = 'none';
-    // Após resetar o formulário, certifique-se de que nenhum checkbox de presença esteja marcado
-    if (presencaSim) presencaSim.checked = false;
-    if (presencaNao) presencaNao.checked = false;
 }
 
 function adicionarParticipanteNaTela(participante) {
@@ -53,8 +43,8 @@ function adicionarParticipanteNaTela(participante) {
     const div = document.createElement('div');
     div.className = 'participante';
 
-    if (participante.ingresso === 'VIP') div.classList.add('vip');
-    if (participante.ingresso === 'Convidado') div.classList.add('convidado');
+    if (participante.ingresso === 'vip') div.classList.add('vip');
+    if (participante.ingresso === 'convidado') div.classList.add('convidado');
 
     div.innerHTML = `
         <p><strong>Nome:</strong> ${participante.nome}</p>
@@ -79,36 +69,30 @@ function limparDados() {
 
 function configurarNovidades() {
     document.addEventListener('change', (e) => {
-        if (e.target.name === 'novidades') {
-            const mostrar = e.target.value === 'sim' && e.target.checked;
-            document.getElementById('novidades').style.display = mostrar ? 'block' : 'none';
+        const target = e.target;
 
-            // Desmarcar o outro checkbox de novidades para simular radio
-            if (e.target.value === 'sim' && e.target.checked) {
-                document.querySelector('input[name="novidades"][value="nao"]').checked = false;
-            } else if (e.target.value === 'nao' && e.target.checked) {
-                document.querySelector('input[name="novidades"][value="sim"]').checked = false;
-                document.getElementById('novidades').style.display = 'none'; // Esconder se 'Não' for marcado
-            }
-        } else if (e.target.name === 'presenca') {
-            // Desmarcar o outro checkbox de presença para simular radio
-            if (e.target.value === 'sim' && e.target.checked) {
-                document.querySelector('input[name="presenca"][value="nao"]').checked = false;
-            } else if (e.target.value === 'nao' && e.target.checked) {
-                document.querySelector('input[name="presenca"][value="sim"]').checked = false;
-            }
+        // Simular radio nos checkboxes
+        if (target.name === 'novidades') {
+            const outros = document.querySelectorAll(`input[name="novidades"]:not([value="${target.value}"])`);
+            outros.forEach(cb => cb.checked = false);
+
+            document.getElementById('novidades').style.display = target.value === 'sim' && target.checked ? 'block' : 'none';
+        }
+
+        if (target.name === 'presenca') {
+            const outros = document.querySelectorAll(`input[name="presenca"]:not([value="${target.value}"])`);
+            outros.forEach(cb => cb.checked = false);
         }
     });
 }
 
-// Função para atualizar a data e hora
 function atualizarDataHora() {
     const elemento = document.getElementById('data-hora');
     const agora = new Date();
-    const opcoes = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
+    const opcoes = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
@@ -119,23 +103,18 @@ function atualizarDataHora() {
 
 setInterval(atualizarDataHora, 1000);
 
-atualizarDataHora();
-
 window.onload = () => {
     const mensagemBoasVindas = document.getElementById('mensagem-boas-vindas');
     const botaoFechar = mensagemBoasVindas.querySelector('.botao-fechar');
-    
+
     mensagemBoasVindas.classList.add('visivel');
 
-    // Função para fechar a mensagem
     const fecharMensagem = () => {
         mensagemBoasVindas.classList.remove('visivel');
     };
 
-    // Adicionar evento de clique ao botão
     botaoFechar.addEventListener('click', fecharMensagem);
 
-    // Remover a mensagem após 5 segundos se o usuário não fechar
     setTimeout(() => {
         if (mensagemBoasVindas.classList.contains('visivel')) {
             fecharMensagem();
@@ -145,14 +124,9 @@ window.onload = () => {
     exibirDataHora();
     configurarNovidades();
 
-    // Adicionar event listeners para os botões
     const botaoCadastrar = document.querySelector('.botao.cadastrar');
-    if (botaoCadastrar) {
-        botaoCadastrar.addEventListener('click', cadastrar);
-    }
+    if (botaoCadastrar) botaoCadastrar.addEventListener('click', cadastrar);
 
     const botaoLimpar = document.querySelector('.botao.limpar');
-    if (botaoLimpar) {
-        botaoLimpar.addEventListener('click', limparDados);
-    }
+    if (botaoLimpar) botaoLimpar.addEventListener('click', limparDados);
 };
