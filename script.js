@@ -1,29 +1,37 @@
+// Lista onde serão armazenados os participantes cadastrados
 const participantes = [];
 
+// Mostra a data e hora atual
 function exibirDataHora() {
     const dataHora = new Date();
     document.getElementById('data-hora').textContent = dataHora.toLocaleString();
 }
 
+// Função de cadastrar o usuário
 function cadastrar() {
+
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
     const presencaSim = document.querySelector('input[name="presenca"][value="sim"]');
     const presencaNao = document.querySelector('input[name="presenca"][value="nao"]');
     const ingresso = document.getElementById('ingresso').value;
 
+    // Caracteres para validar o e-mail
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // Verifica se todos os campos obrigatórios foram preenchidos
     if (!nome || !email || (!presencaSim.checked && !presencaNao.checked)) {
         alert('Por favor, preencha todos os campos obrigatórios e selecione uma opção de presença.');
         return;
     }
 
+    // Verifica se o e-mail é válido
     if (!emailRegex.test(email)) {
         alert('Por favor, insira um endereço de e-mail válido.');
         return;
     }
 
+    // Cria um objeto com os dados do participante
     const participante = {
         nome,
         email,
@@ -31,14 +39,19 @@ function cadastrar() {
         ingresso
     };
 
+    // Adiciona o participante à lista 
     participantes.push(participante);
     console.log(participantes);
-    adicionarParticipanteNaTela(participante);
+
+    adicionarParticipante(participante);
+
+    // Limpa o formulário e esconde a área de novidades
     document.getElementById('formulario').reset();
     document.getElementById('novidades').style.display = 'none';
 }
 
-function adicionarParticipanteNaTela(participante) {
+// Adiciona o participante
+function adicionarParticipante(participante) {
     const lista = document.getElementById('lista-participantes');
     const div = document.createElement('div');
     div.className = 'participante';
@@ -46,6 +59,7 @@ function adicionarParticipanteNaTela(participante) {
     if (participante.ingresso === 'vip') div.classList.add('vip');
     if (participante.ingresso === 'convidado') div.classList.add('convidado');
 
+    // Insere as informações do participante no HTML
     div.innerHTML = `
         <p><strong>Nome:</strong> ${participante.nome}</p>
         <p><strong>Email:</strong> ${participante.email}</p>
@@ -62,20 +76,22 @@ function adicionarParticipanteNaTela(participante) {
     lista.appendChild(div);
 }
 
+// Limpa os dados do formulário
 function limparDados() {
     document.getElementById('formulario').reset();
     document.getElementById('novidades').style.display = 'none';
 }
 
+// Configura os comportamentos dos checkboxes, simulando radio
 function configurarNovidades() {
     document.addEventListener('change', (e) => {
         const target = e.target;
 
-        // Simular radio nos checkboxes
         if (target.name === 'novidades') {
             const outros = document.querySelectorAll(`input[name="novidades"]:not([value="${target.value}"])`);
             outros.forEach(cb => cb.checked = false);
 
+            // Mostra a área de novidades, quando necessário
             document.getElementById('novidades').style.display = target.value === 'sim' && target.checked ? 'block' : 'none';
         }
 
@@ -86,6 +102,7 @@ function configurarNovidades() {
     });
 }
 
+// Atualiza a data e hora a cada segundo
 function atualizarDataHora() {
     const elemento = document.getElementById('data-hora');
     const agora = new Date();
@@ -103,10 +120,12 @@ function atualizarDataHora() {
 
 setInterval(atualizarDataHora, 1000);
 
+// Mensagem de Bem-Vindo
 window.onload = () => {
     const mensagemBoasVindas = document.getElementById('mensagem-boas-vindas');
     const botaoFechar = mensagemBoasVindas.querySelector('.botao-fechar');
 
+    // Mostra mensagem de boas-vindas
     mensagemBoasVindas.classList.add('visivel');
 
     const fecharMensagem = () => {
@@ -115,12 +134,14 @@ window.onload = () => {
 
     botaoFechar.addEventListener('click', fecharMensagem);
 
+    // Fecha automaticamente a mensagem após 5 segundos
     setTimeout(() => {
         if (mensagemBoasVindas.classList.contains('visivel')) {
             fecharMensagem();
         }
     }, 5000);
 
+    // Inicializa as funções ao carregar a página
     exibirDataHora();
     configurarNovidades();
 
